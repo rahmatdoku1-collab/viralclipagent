@@ -2,11 +2,64 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>TikTok Connected - ViralClipAgent</title>
+  <title>TikTok Callback - ViralClipAgent</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      line-height: 1.5;
+    }
+    .box {
+      background: #f4f4f4;
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 16px;
+      word-break: break-all;
+    }
+    code {
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
   <h1>TikTok Authorization Callback</h1>
-  <p>This page is used by ViralClipAgent to receive TikTok authorization responses.</p>
-  <p>You may return to the ViralClipAgent Telegram bot.</p>
+  <p>Copy command di bawah ini, lalu paste ke Telegram bot ViralClipAgent.</p>
+
+  <div class="box">
+    <strong>Code:</strong>
+    <div id="code">Loading...</div>
+  </div>
+
+  <div class="box">
+    <strong>State:</strong>
+    <div id="state">Loading...</div>
+  </div>
+
+  <div class="box">
+    <strong>Copy command ini ke Telegram:</strong>
+    <br><br>
+    <code id="command">Loading...</code>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code") || "";
+    const state = params.get("state") || "";
+    const error = params.get("error") || "";
+
+    if (error) {
+      document.getElementById("code").innerText = "ERROR: " + error;
+      document.getElementById("state").innerText = "-";
+      document.getElementById("command").innerText = "TikTok authorization failed.";
+    } else if (code && state) {
+      document.getElementById("code").innerText = code;
+      document.getElementById("state").innerText = state;
+      document.getElementById("command").innerText = "/tiktok_token " + code + " state=" + state;
+    } else {
+      document.getElementById("code").innerText = "No code found.";
+      document.getElementById("state").innerText = "No state found.";
+      document.getElementById("command").innerText = "No TikTok authorization code found in URL.";
+    }
+  </script>
 </body>
 </html>
